@@ -18,7 +18,7 @@ from .latex import latex
 
 __doctest_requires__ = {('preview',): ['pyglet']}
 
-@doctest_depends_on(exe=('latex', 'dvipng'), modules=('pyglet',),
+@doctest_depends_on(exe=('xelatex', 'dvipng'), modules=('pyglet',),
             disable_viewers=('evince', 'gimp', 'superior-dvi-viewer'))
 def preview(expr, output='png', viewer=None, euler=True, packages=(),
             filename=None, outputbuffer=None, preamble=None, dvioptions=None,
@@ -184,8 +184,8 @@ def preview(expr, output='png', viewer=None, euler=True, packages=(),
         if outputTexFile is not None:
             shutil.copyfile(join(workdir, 'texput.tex'), outputTexFile)
 
-        if not shutil.which('latex'):
-            raise RuntimeError("latex program is not installed")
+        if not shutil.which('xelatex'):
+            raise RuntimeError("xelatex program is not installed")
 
         try:
             # Avoid showing a cmd.exe window when running this
@@ -194,14 +194,14 @@ def preview(expr, output='png', viewer=None, euler=True, packages=(),
                 creation_flag = 0x08000000 # CREATE_NO_WINDOW
             else:
                 creation_flag = 0 # Default value
-            check_output(['latex', '-halt-on-error', '-interaction=nonstopmode',
+            check_output(['xelatex', '-halt-on-error', '-interaction=nonstopmode',
                           'texput.tex'],
                          cwd=workdir,
                          stderr=STDOUT,
                          creationflags=creation_flag)
         except CalledProcessError as e:
             raise RuntimeError(
-                "'latex' exited abnormally with the following output:\n%s" %
+                "'xelatex' exited abnormally with the following output:\n%s" %
                 e.output)
 
         src = "texput.%s" % (output)
