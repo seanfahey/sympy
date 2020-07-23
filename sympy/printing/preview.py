@@ -194,7 +194,7 @@ def preview(expr, output='png', viewer=None, euler=True, packages=(),
                 creation_flag = 0x08000000 # CREATE_NO_WINDOW
             else:
                 creation_flag = 0 # Default value
-            check_output(['xelatex', '-halt-on-error', '-interaction=nonstopmode',
+            check_output(['xelatex', '-halt-on-error', '-interaction=nonstopmode', '-no-pdf',   # see xelatex to svg section at https://unhewn-thoughts.org/guide-on-using-latex-xetex-luatex-with-anki#png-and-svg-generation
                           'texput.tex'],
                          cwd=workdir,
                          stderr=STDOUT,
