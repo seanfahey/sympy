@@ -194,7 +194,7 @@ def preview(expr, output='png', viewer=None, euler=True, packages=(),
                 creation_flag = 0x08000000 # CREATE_NO_WINDOW
             else:
                 creation_flag = 0 # Default value
-            check_output(['xelatex', '-halt-on-error', '-interaction=nonstopmode',
+            check_output(['xelatex', '-halt-on-error', '-interaction=nonstopmode', '-no-pdf',   # see xelatex to svg section at https://unhewn-thoughts.org/guide-on-using-latex-xetex-luatex-with-anki#png-and-svg-generation
                           'texput.tex'],
                          cwd=workdir,
                          stderr=STDOUT,
@@ -236,13 +236,14 @@ def preview(expr, output='png', viewer=None, euler=True, packages=(),
                 "dvisvgm": ["--no-fonts"],
             }
 
+            # xelatex outputs xdv instead of dvi
             commandend = {
-                "dvips": ["-o", src, "texput.dvi"],
-                "dvipdf": ["texput.dvi", src],
-                "dvipdfm": ["-o", src, "texput.dvi"],
-                "dvipdfmx": ["-o", src, "texput.dvi"],
-                "dvipng": ["-o", src, "texput.dvi"],
-                "dvisvgm": ["-o", src, "texput.dvi"],
+                "dvips": ["-o", src, "texput.xdv"],
+                "dvipdf": ["texput.xdv", src],
+                "dvipdfm": ["-o", src, "texput.xdv"],
+                "dvipdfmx": ["-o", src, "texput.xdv"],
+                "dvipng": ["-o", src, "texput.xdv"],
+                "dvisvgm": ["-o", src, "texput.xdv"],
             }
 
             if dvioptions is not None:
