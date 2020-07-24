@@ -236,13 +236,14 @@ def preview(expr, output='png', viewer=None, euler=True, packages=(),
                 "dvisvgm": ["--no-fonts"],
             }
 
+            # xelatex outputs xdv instead of dvi
             commandend = {
-                "dvips": ["-o", src, "texput.dvi"],
-                "dvipdf": ["texput.dvi", src],
-                "dvipdfm": ["-o", src, "texput.dvi"],
-                "dvipdfmx": ["-o", src, "texput.dvi"],
-                "dvipng": ["-o", src, "texput.dvi"],
-                "dvisvgm": ["-o", src, "texput.dvi"],
+                "dvips": ["-o", src, "texput.xdv"],
+                "dvipdf": ["texput.xdv", src],
+                "dvipdfm": ["-o", src, "texput.xdv"],
+                "dvipdfmx": ["-o", src, "texput.xdv"],
+                "dvipng": ["-o", src, "texput.xdv"],
+                "dvisvgm": ["-o", src, "texput.xdv"],
             }
 
             if dvioptions is not None:
